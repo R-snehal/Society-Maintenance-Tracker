@@ -14,21 +14,105 @@ export default function NoticeBoardPage() {
   }, []);
 
   return (
-    <div>
-      <Topbar title="Notice Board" />
-      <div className="container">
-        {error && <p className="error">{error}</p>}
-        {notices.length === 0 && <p>No notices yet.</p>}
-        {notices.map((n) => (
-          <div key={n.id} className={`card ${n.is_important ? "important" : ""}`}>
-            <strong>{n.title}</strong> {n.is_important && <span className="badge" style={{ background: "#fed7aa" }}>Pinned</span>}
-            <p>{n.body}</p>
-            <p style={{ fontSize: 12, color: "#666" }}>
-              By {n.author_name} on {new Date(n.created_at).toLocaleString()}
-            </p>
-          </div>
-        ))}
+  <div>
+    <Topbar title="Notice Board" />
+
+    <main className="container">
+
+      <div className="page-heading">
+        <h1>Notice Board</h1>
+        <p>
+          Important announcements and updates from your society.
+        </p>
       </div>
-    </div>
-  );
+
+
+      {notices.length === 0 ? (
+
+        <div className="empty-state">
+          <h3>No notices yet</h3>
+          <p>
+            There are currently no announcements to display.
+          </p>
+        </div>
+
+      ) : (
+
+        <div>
+
+          {notices.map((n) => (
+
+            <div
+              key={n.id}
+              className={`card notice-card ${
+              n.is_important ? "important" : ""
+            }`}
+            >
+
+              <div className="complaint-header">
+
+                <div>
+
+                  <div className="notice-title">
+                    {n.title}
+                  </div>
+
+                  <div className="notice-meta">
+                    Posted on{" "}
+                    {new Date(
+                      n.created_at
+                    ).toLocaleDateString()}
+                  </div>
+
+                </div>
+
+
+                {n.is_important && (
+                  <span
+                    className="badge"
+                    style={{
+                      background: "#fee2e2",
+                      color: "#b91c1c"
+                    }}
+                  >
+                    Important
+                  </span>
+                )}
+
+              </div>
+
+
+              <p className="notice-body">
+                {n.body}
+              </p>
+
+            </div>
+
+          ))}
+
+        </div>
+
+      )}
+
+    </main>
+  </div>
+);
+  // return (
+  //   <div>
+  //     <Topbar title="Notice Board" />
+  //     <div className="container">
+  //       {error && <p className="error">{error}</p>}
+  //       {notices.length === 0 && <p>No notices yet.</p>}
+  //       {notices.map((n) => (
+  //         <div key={n.id} className={`card ${n.is_important ? "important" : ""}`}>
+  //           <strong>{n.title}</strong> {n.is_important && <span className="badge" style={{ background: "#fed7aa" }}>Pinned</span>}
+  //           <p>{n.body}</p>
+  //           <p style={{ fontSize: 12, color: "#666" }}>
+  //             By {n.author_name} on {new Date(n.created_at).toLocaleString()}
+  //           </p>
+  //         </div>
+  //       ))}
+  //     </div>
+  //   </div>
+  // );
 }

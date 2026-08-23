@@ -25,21 +25,71 @@ export default function RegisterPage() {
       setError(err.message);
     }
   }
-
   return (
-    <div className="container" style={{ maxWidth: 360, marginTop: 60 }}>
-      <h1>Register</h1>
-      <p style={{ fontSize: 13, color: "#666" }}>
-        Self-registration creates a resident account. Admin accounts are seeded separately (see README).
+  <div className="auth-page">
+    <div className="auth-card">
+      <div className="auth-logo">S</div>
+
+      <h1>Create your account</h1>
+
+      <p className="auth-subtitle">
+        Join your society maintenance portal.
       </p>
+
       {error && <p className="error">{error}</p>}
+
       <form onSubmit={handleSubmit}>
-        <input placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} required />
-        <input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        <button type="submit">Create account</button>
+        <label>Full name</label>
+        <input
+          placeholder="Enter your full name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+
+        <label>Email</label>
+        <input
+          placeholder="you@example.com"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+
+        <label>Password</label>
+        <input
+          placeholder="Create a password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+
+        <button type="submit" style={{ width: "100%", marginTop: 6 }}>
+          Create account
+        </button>
       </form>
-      <p>Already have an account? <Link href="/login">Log in</Link></p>
+
+      <div className="auth-footer">
+        Already have an account? <Link href="/login">Log in</Link>
+      </div>
     </div>
-  );
+  </div>
+);
+  // return (
+  //   <div className="container" style={{ maxWidth: 360, marginTop: 60 }}>
+  //     <h1>Register</h1>
+  //     <p style={{ fontSize: 13, color: "#666" }}>
+  //       Self-registration creates a resident account. Admin accounts are seeded separately (see README).
+  //     </p>
+  //     {error && <p className="error">{error}</p>}
+  //     <form onSubmit={handleSubmit}>
+  //       <input placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} required />
+  //       <input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+  //       <input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+  //       <button type="submit">Create account</button>
+  //     </form>
+  //     <p>Already have an account? <Link href="/login">Log in</Link></p>
+  //   </div>
+  // );
 }

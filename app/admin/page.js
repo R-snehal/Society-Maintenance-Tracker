@@ -53,61 +53,302 @@ export default function AdminPage() {
       setError(err.message);
     }
   }
-
+   
   return (
-    <div>
-      <Topbar title="Admin Dashboard" />
-      <div className="container">
-        <div style={{ marginBottom: 12 }}>
-          <Link href="/admin/notices" style={{ marginRight: 12 }}>Manage Notices</Link>
-          <Link href="/admin/dashboard">View Stats Dashboard</Link>
-        </div>
-        {error && <p className="error">{error}</p>}
-        <div className="filters">
-          <select value={category} onChange={(e) => setCategory(e.target.value)}>
+  <div>
+    <Topbar title="Admin Dashboard" />
+
+    <main className="container">
+
+      <div className="page-heading">
+        <h1>Admin Dashboard</h1>
+        <p>
+          Manage complaints and keep track of society maintenance.
+        </p>
+      </div>
+
+      <div style={{ marginBottom: 24 }}>
+        <Link href="/admin/notices" style={{ marginRight: 20 }}>
+          Manage Notices
+        </Link>
+
+        <Link href="/admin/dashboard">
+          View Stats Dashboard
+        </Link>
+      </div>
+
+      {error && <p className="error">{error}</p>}
+
+
+      <div className="filters">
+
+        <div>
+          <label>Category</label>
+
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
             <option value="">All Categories</option>
-            {["Plumbing", "Electrical", "Cleaning", "Security", "Elevator", "Other"].map((c) => (
-              <option key={c} value={c}>{c}</option>
+
+            {[
+              "Plumbing",
+              "Electrical",
+              "Cleaning",
+              "Security",
+              "Elevator",
+              "Other"
+            ].map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
             ))}
-          </select>
-          <select value={status} onChange={(e) => setStatus(e.target.value)}>
-            <option value="">All Statuses</option>
-            {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
+
           </select>
         </div>
 
-        {complaints.map((c) => (
-          <div key={c.id} className={`card ${c.is_overdue ? "overdue" : ""}`}>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <strong>#{c.id} - {c.category}</strong>
-              <span>
-                <span className={`badge ${c.status.replace(" ", "-")}`}>{c.status}</span>
-                {c.is_overdue && <span className="badge" style={{ background: "#fecaca" }}>Overdue</span>}
-              </span>
-            </div>
-            <p>{c.description}</p>
-            {c.photo_url && <img src={c.photo_url} alt="complaint" style={{ maxWidth: 200, borderRadius: 4 }} />}
-            <p style={{ fontSize: 12, color: "#666" }}>Raised {new Date(c.created_at).toLocaleString()}</p>
 
-            <label>Priority:</label>
-            <select value={c.priority} onChange={(e) => updatePriority(c.id, e.target.value)}>
-              {PRIORITIES.map((p) => <option key={p} value={p}>{p}</option>)}
+        <div>
+          <label>Status</label>
+
+          <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+          >
+            <option value="">All Statuses</option>
+
+            {STATUSES.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+
+          </select>
+        </div>
+
+      </div>
+
+
+      <div
+        className="page-heading"
+        style={{ marginTop: 32 }}
+      >
+        <h2>Complaints</h2>
+        <p>
+          Review and manage complaints submitted by residents.
+        </p>
+      </div>
+
+
+      {complaints.length === 0 && (
+        <div className="empty-state">
+          <h3>No complaints found</h3>
+          <p>
+            There are no complaints matching your current filters.
+          </p>
+        </div>
+      )}
+
+
+      {complaints.map((c) => (
+
+        <div
+          key={c.id}
+          className={`card complaint-card ${
+            c.is_overdue ? "overdue" : ""
+          }`}
+        >
+
+          <div className="complaint-header">
+
+            <div>
+              <div className="complaint-title">
+                #{c.id} · {c.category}
+              </div>
+
+              <div className="complaint-meta">
+                Raised{" "}
+                {new Date(
+                  c.created_at
+                ).toLocaleString()}
+              </div>
+            </div>
+
+
+            <div>
+
+              <span
+                className={`badge ${
+                  c.status.replace(" ", "-")
+                }`}
+              >
+                {c.status}
+              </span>
+
+              <span
+                className={`badge ${c.priority}`}
+              >
+                {c.priority}
+              </span>
+
+              {c.is_overdue && (
+                <span
+                  className="badge"
+                  style={{
+                    background: "#fee2e2",
+                    color: "#b91c1c"
+                  }}
+                >
+                  Overdue
+                </span>
+              )}
+
+            </div>
+
+          </div>
+
+
+          <p className="complaint-description">
+            {c.description}
+          </p>
+
+
+          {c.photo_url && (
+            <img
+              src={c.photo_url}
+              alt="complaint"
+              className="complaint-image"
+            />
+          )}
+
+
+          <div className="admin-field">
+
+            <label>Priority</label>
+
+            <select
+              value={c.priority}
+              onChange={(e) =>
+                updatePriority(
+                  c.id,
+                  e.target.value
+                )
+              }
+            >
+              {PRIORITIES.map((p) => (
+                <option
+                  key={p}
+                  value={p}
+                >
+                  {p}
+                </option>
+              ))}
             </select>
 
-            <label>Add note (optional):</label>
-            <input value={noteDrafts[c.id] || ""}
-              onChange={(e) => setNoteDrafts((d) => ({ ...d, [c.id]: e.target.value }))} />
-
-            <div style={{ display: "flex", gap: 8 }}>
-              {STATUSES.map((s) => (
-                <button key={s} onClick={() => updateStatus(c.id, s)} disabled={c.status === s}>
-                  Mark {s}
-                </button>
-              ))}
-            </div>
           </div>
-        ))}
-      </div>
-    </div>
-  );
+
+
+          <div className="admin-field">
+
+            <label>
+              Add note <span>(optional)</span>
+            </label>
+
+            <input
+              placeholder="Add a note about this update..."
+              value={noteDrafts[c.id] || ""}
+              onChange={(e) =>
+                setNoteDrafts((d) => ({
+                  ...d,
+                  [c.id]: e.target.value
+                }))
+              }
+            />
+
+          </div>
+
+
+          <div className="admin-status-actions">
+
+            {STATUSES.map((s) => (
+
+              <button
+                key={s}
+                onClick={() =>
+                  updateStatus(c.id, s)
+                }
+                disabled={c.status === s}
+              >
+                {c.status === s
+                  ? `Current: ${s}`
+                  : `Mark ${s}`}
+              </button>
+
+            ))}
+
+          </div>
+
+        </div>
+
+      ))}
+
+    </main>
+  </div>
+);
+  // return (
+  //   <div>
+  //     <Topbar title="Admin Dashboard" />
+  //     <div className="container">
+  //       <div style={{ marginBottom: 12 }}>
+  //         <Link href="/admin/notices" style={{ marginRight: 12 }}>Manage Notices</Link>
+  //         <Link href="/admin/dashboard">View Stats Dashboard</Link>
+  //       </div>
+  //       {error && <p className="error">{error}</p>}
+  //       <div className="filters">
+  //         <select value={category} onChange={(e) => setCategory(e.target.value)}>
+  //           <option value="">All Categories</option>
+  //           {["Plumbing", "Electrical", "Cleaning", "Security", "Elevator", "Other"].map((c) => (
+  //             <option key={c} value={c}>{c}</option>
+  //           ))}
+  //         </select>
+  //         <select value={status} onChange={(e) => setStatus(e.target.value)}>
+  //           <option value="">All Statuses</option>
+  //           {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
+  //         </select>
+  //       </div>
+
+  //       {complaints.map((c) => (
+  //         <div key={c.id} className={`card ${c.is_overdue ? "overdue" : ""}`}>
+  //           <div style={{ display: "flex", justifyContent: "space-between" }}>
+  //             <strong>#{c.id} - {c.category}</strong>
+  //             <span>
+  //               <span className={`badge ${c.status.replace(" ", "-")}`}>{c.status}</span>
+  //               {c.is_overdue && <span className="badge" style={{ background: "#fecaca" }}>Overdue</span>}
+  //             </span>
+  //           </div>
+  //           <p>{c.description}</p>
+  //           {c.photo_url && <img src={c.photo_url} alt="complaint" style={{ maxWidth: 200, borderRadius: 4 }} />}
+  //           <p style={{ fontSize: 12, color: "#666" }}>Raised {new Date(c.created_at).toLocaleString()}</p>
+
+  //           <label>Priority:</label>
+  //           <select value={c.priority} onChange={(e) => updatePriority(c.id, e.target.value)}>
+  //             {PRIORITIES.map((p) => <option key={p} value={p}>{p}</option>)}
+  //           </select>
+
+  //           <label>Add note (optional):</label>
+  //           <input value={noteDrafts[c.id] || ""}
+  //             onChange={(e) => setNoteDrafts((d) => ({ ...d, [c.id]: e.target.value }))} />
+
+  //           <div style={{ display: "flex", gap: 8 }}>
+  //             {STATUSES.map((s) => (
+  //               <button key={s} onClick={() => updateStatus(c.id, s)} disabled={c.status === s}>
+  //                 Mark {s}
+  //               </button>
+  //             ))}
+  //           </div>
+  //         </div>
+  //       ))}
+  //     </div>
+  //   </div>
+  // );
 }
