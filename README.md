@@ -10,7 +10,7 @@ and email updates.
 - **Database:** PostgreSQL (tested against Supabase free tier)
 - **Auth:** JWT (jsonwebtoken) + bcrypt, role-based (`resident` / `admin`)
 - **Photo uploads:** Cloudinary unsigned upload (direct browser → Cloudinary, no backend file handling)
-- **Email:** Resend REST API via `fetch` (no SDK dependency)
+- **Email:** Sendgrid REST API via `fetch` (no SDK dependency)
 
 ## Setup
 
@@ -40,7 +40,7 @@ Fill in:
 - `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` / `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET` -
   create a free [Cloudinary](https://cloudinary.com) account, then add an
   **unsigned** upload preset under Settings → Upload
-- `RESEND_API_KEY` / `EMAIL_FROM` - create a free [Resend](https://resend.com)
+- `SENDGRID_API_KEY` / `EMAIL_FROM` - create a free [Sendgrid](https://www.twilio.com/)
   account and API key. `EMAIL_FROM` can stay as `onboarding@resend.dev` for testing.
 
 ### 4. Apply the database schema
