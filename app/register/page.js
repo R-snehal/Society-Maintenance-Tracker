@@ -76,20 +76,5 @@ export default function RegisterPage() {
     </div>
   </div>
 );
-  // return (
-  //   <div className="container" style={{ maxWidth: 360, marginTop: 60 }}>
-  //     <h1>Register</h1>
-  //     <p style={{ fontSize: 13, color: "#666" }}>
-  //       Self-registration creates a resident account. Admin accounts are seeded separately (see README).
-  //     </p>
-  //     {error && <p className="error">{error}</p>}
-  //     <form onSubmit={handleSubmit}>
-  //       <input placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} required />
-  //       <input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-  //       <input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-  //       <button type="submit">Create account</button>
-  //     </form>
-  //     <p>Already have an account? <Link href="/login">Log in</Link></p>
-  //   </div>
-  // );
+
 }

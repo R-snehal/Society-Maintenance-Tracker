@@ -67,18 +67,4 @@ export default function LoginPage() {
     </div>
   </div>
 );
-  // return (
-  //   <div className="container" style={{ maxWidth: 360, marginTop: 60 }}>
-  //     <h1>Log in</h1>
-  //     {error && <p className="error">{error}</p>}
-  //     <form onSubmit={handleSubmit}>
-  //       <input placeholder="Email" type="email" value={email}
-  //         onChange={(e) => setEmail(e.target.value)} required />
-  //       <input placeholder="Password" type="password" value={password}
-  //         onChange={(e) => setPassword(e.target.value)} required />
-  //       <button type="submit">Log in</button>
-  //     </form>
-  //     <p>No account? <Link href="/register">Register</Link></p>
-  //   </div>
-  // );
 }
