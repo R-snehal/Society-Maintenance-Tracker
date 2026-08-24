@@ -41,7 +41,7 @@ Fill in:
   create a free [Cloudinary](https://cloudinary.com) account, then add an
   **unsigned** upload preset under Settings → Upload
 - `SENDGRID_API_KEY` / `EMAIL_FROM` - create a free [Sendgrid](https://www.twilio.com/)
-  account and API key. `EMAIL_FROM` can stay as `onboarding@resend.dev` for testing.
+  account and API key. `EMAIL_FROM` can stay as `admin_email` for testing.
 
 ### 4. Apply the database schema
 
