@@ -67,7 +67,7 @@ Two events trigger email: a complaint's status changing, and a new notice
 being marked important.
 
 Both go through a single `sendEmail(to, subject, html)` helper that calls the
-Resend REST API directly via `fetch` - no SDK dependency, which keeps the
+SendGrid REST API directly via `fetch` - no SDK dependency, which keeps the
 project's dependency footprint minimal as required by the submission
 guidelines. Emails are sent *after* the triggering database transaction
 commits, and are deliberately "fire and forget": a failed email send is
